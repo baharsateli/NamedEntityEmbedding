@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.baharsateli.deeplearning</groupId>
+    <artifactId>mvn-NEE</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Named Entity Embedding</name>
+    <url>http://baharsateli.com</url>
+
+    <properties>
+        <!-- Change the nd4j.backend property to nd4j-cuda-8.0-platform, nd4j-cuda-9.0-platform or nd4j-cuda-9.1-platform to use CUDA GPUs -->
+        <nd4j.backend>nd4j-native-platform</nd4j.backend>
+        <!--<nd4j.backend>nd4j-cuda-9.1-platform</nd4j.backend>-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <shadedClassifier>bin</shadedClassifier>
+
+        <java.version>1.8</java.version>
+        <nd4j.version>1.0.0-beta</nd4j.version>
+        <dl4j.version>1.0.0-beta</dl4j.version>
+        <datavec.version>1.0.0-beta</datavec.version>
+
+        <!-- Scala binary version: DL4J's Spark and UI functionality are released with both Scala 2.10 and 2.11 support -->
+        <scala.binary.version>2.11</scala.binary.version>
+
+        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
+        <exec-maven-plugin.version>1.4.0</exec-maven-plugin.version>
+        <maven.minimum.version>3.3.1</maven.minimum.version>
+        <scala.plugin.version>3.2.2</scala.plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.nd4j</groupId>
+                <artifactId>nd4j-native-platform</artifactId>
+                <version>${nd4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nd4j</groupId>
+                <artifactId>nd4j-cuda-8.0-platform</artifactId>
+                <version>${nd4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nd4j</groupId>
+                <artifactId>nd4j-cuda-9.0-platform</artifactId>
+                <version>${nd4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nd4j</groupId>
+                <artifactId>nd4j-cuda-9.1-platform</artifactId>
+                <version>${nd4j.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- JUnit for testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ND4J backend. You need one in every DL4J project. Normally define artifactId as either "nd4j-native-platform" or "nd4j-cuda-7.5-platform" -->
+        <dependency>
+          <groupId>org.nd4j</groupId>
+          <artifactId>${nd4j.backend}</artifactId>
+          <version>${nd4j.version}</version>
+        </dependency>
+
+        <!-- Core DL4J functionality -->
+        <dependency>
+          <groupId>org.deeplearning4j</groupId>
+          <artifactId>deeplearning4j-core</artifactId>
+          <version>${dl4j.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.deeplearning4j</groupId>
+          <artifactId>deeplearning4j-nlp</artifactId>
+          <version>${dl4j.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.deeplearning4j</groupId>
+          <artifactId>deeplearning4j-zoo</artifactId>
+          <version>${dl4j.version}</version>
+        </dependency>
+
+        <!-- deeplearning4j-ui is used for visualization: see http://deeplearning4j.org/visualization -->
+        <dependency>
+          <groupId>org.deeplearning4j</groupId>
+          <artifactId>deeplearning4j-ui_${scala.binary.version}</artifactId>
+          <version>${dl4j.version}</version>
+        </dependency>
+  </dependencies>
+</project>
