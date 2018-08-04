@@ -16,8 +16,7 @@ package com.baharsateli.deeplearning;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import org.datavec.api.util.ClassPathResource;
-
+import org.deeplearning4j.models.embeddings.loader.WordVectorSerializer;
 import org.deeplearning4j.models.word2vec.Word2Vec;
 import org.deeplearning4j.text.sentenceiterator.BasicLineIterator;
 import org.deeplearning4j.text.sentenceiterator.SentenceIterator;
@@ -25,6 +24,9 @@ import org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreproc
 
 import org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory;
 import org.deeplearning4j.text.tokenization.tokenizerfactory.TokenizerFactory;
+
+import org.nd4j.linalg.io.ClassPathResource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,7 @@ public class Learner {
 
     private static Logger log = LoggerFactory.getLogger(Learner.class);
     private static Word2Vec model = null;
+    private static String outputFile = "output.zip";
 
     public static void main(String args[]) throws Exception {
         String filePath = new ClassPathResource("raw_sentences.txt").getFile().getAbsolutePath();
@@ -48,7 +51,12 @@ public class Learner {
         log.info("Fitting the model....");
         model.fit();
 
-        //log.info("Writing word vectors to text file....");
+        log.info("Saving the model ...");
+        // this saves the model as a ZIP file in the project root directory
+        WordVectorSerializer.writeWord2VecModel(model, outputFile);
+
+        // Alternatively, you could save it to a text file, though it's been deprecated
+        //WordVectorSerializer.writeWordVectors(model, "pathToWriteto.txt");
 
         // An example of what to do with these named entity vectors.
         getNClosest("day", 10);
